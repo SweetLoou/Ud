@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Under Browser | Ultimate Anti-Detect Privacy</title>
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+   
+   <style>
+       :root {
+           --neon-mint: #00ff88;
+           --void-black: #050505;
+           --surface: #0a0a0a;
+           --surface-highlight: #111111;
+       }
+       
+       body {
+           font-family: 'Inter', sans-serif;
+           background-color: var(--void-black);
+           color: white;
+           overflow-x: hidden;
+       }
+
+       h1, h2, h3, h4, h5, h6, .display-font {
+           font-family: 'Space Grotesk', sans-serif;
+       }
+
+       /* Smooth reveal animation classes */
+       .reveal {
+           opacity: 0;
+           transform: translateY(30px);
+           transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+       }
+
+       .reveal.active {
+           opacity: 1;
+           transform: translateY(0);
+       }
+
+       /* Custom Scrollbar */
+       ::-webkit-scrollbar {
+           width: 8px;
+       }
+       ::-webkit-scrollbar-track {
+           background: #000;
+       }
+       ::-webkit-scrollbar-thumb {
+           background: #333;
+           border-radius: 4px;
+       }
+       ::-webkit-scrollbar-thumb:hover {
+           background: var(--neon-mint);
+       }
+
+       .grid-bg {
+           background-size: 40px 40px;
+           background-image:
+               linear-gradient(to right, rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+               linear-gradient(to bottom, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+       }
+   </style>
+</head>
+<body class="antialiased selection:bg-[#00ff88] selection:text-black">
+
+   <!-- NAVIGATION -->
+   <nav id="navbar" class="fixed w-full z-50 top-0 transition-all duration-300 border-b border-transparent">
+       <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+           <!-- Brand -->
+           <a href="#" class="flex items-center gap-3 group">
+               <!-- Logo: Stylized 'U' or Shield/Radar combo -->
+               <svg class="w-8 h-8 text-[#00ff88] transition-transform duration-500 group-hover:scale-110" viewBox="0 0 300 300" fill="none">
+                   <circle cx="150" cy="150" r="28" fill="currentColor" />
+                   <!-- The "Under" Arc - implying being below the surface -->
+                   <path d="M50 150 C50 205 94 250 150 250 C205 250 250 205 250 150" stroke="currentColor" stroke-width="30" stroke-linecap="round"/>
+                   <!-- The Shield/Cover Arc -->
+                   <path d="M30 120 C60 50 150 20 150 20 C150 20 240 50 270 120" stroke="currentColor" stroke-width="30" stroke-linecap="round" stroke-opacity="0.5"/>
+               </svg>
+               <span class="font-bold text-xl tracking-wider display-font">UNDER</span>
+           </a>
+
+           <!-- Links (Desktop) -->
+           <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-400">
+               <a href="#features" class="hover:text-white transition-colors">Features</a>
+               <a href="#security" class="hover:text-white transition-colors">Security</a>
+               <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+           </div>
+
+           <!-- CTA -->
+           <div class="flex items-center gap-4">
+               <a href="#" class="hidden md:block text-sm font-semibold hover:text-[#00ff88]">Log In</a>
+               <a href="#download" class="px-6 py-2 bg-white text-black font-semibold rounded-full hover:bg-[#00ff88] transition-all duration-300 transform hover:scale-105">
+                   Download Free
+               </a>
+           </div>
+           
+           <!-- Mobile Menu Button -->
+           <button class="md:hidden text-white ml-4">
+               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+           </button>
+       </div>
+   </nav>
+
+   <!-- HERO SECTION -->
+   <section class="relative min-h-screen flex items-center pt-20 overflow-hidden grid-bg">
+       <!-- Ambient Background Glow -->
+       <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-[#00ff88] opacity-[0.04] rounded-full blur-[150px] pointer-events-none"></div>
+
+       <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+           
+           <!-- Text Content -->
+           <div class="reveal active pt-10 lg:pt-0">
+               <div class="inline-flex items-center gap-2 px-3 py-1 border border-[#00ff88]/30 rounded-full bg-[#00ff88]/5 text-[#00ff88] text-xs font-bold tracking-widest uppercase mb-6">
+                   <span class="w-2 h-2 rounded-full bg-[#00ff88] animate-pulse"></span>
+                   System Status: Undetected
+               </div>
+               <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6 tracking-tighter">
+                   BROWSE <br>
+                   <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff88] to-emerald-600">UNDER</span> THE RADAR.
+               </h1>
+               <p class="text-gray-400 text-lg md:text-xl max-w-lg mb-8 leading-relaxed">
+                   The only privacy browser that generates a unique, 100% authentic fingerprint for every profile. Beat tracking algorithms and stay invisible.
+               </p>
+               <div class="flex flex-col sm:flex-row gap-4">
+                   <button class="px-8 py-4 bg-[#00ff88] text-black font-bold text-lg rounded-lg hover:bg-[#00cc6a] transition-colors shadow-[0_0_30px_rgba(0,255,136,0.3)] flex items-center justify-center gap-2">
+                       Get Under Free
+                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                   </button>
+                   <button class="px-8 py-4 border border-gray-700 text-white font-medium text-lg rounded-lg hover:border-white hover:bg-white/5 transition-all">
+                       Compare Plans
+                   </button>
+               </div>
+               
+               <div class="mt-8 text-xs text-gray-500 font-mono">
+                   * Windows, macOS, and Linux supported.
+               </div>
+           </div>
+
+           <!-- Interactive Radar Visualizer -->
+           <div class="relative h-[500px] w-full flex items-center justify-center reveal delay-200">
+               <!-- We use the radar to show "scanning" but "blocking" results -->
+               <canvas id="radarCanvas" width="600" height="600" class="w-full max-w-[500px] aspect-square"></canvas>
+               
+               <!-- Overlay Interface UI -->
+               <div class="absolute bottom-10 left-10 text-[10px] font-mono text-[#00ff88] opacity-80 bg-black/50 p-4 rounded border border-gray-800 backdrop-blur-sm">
+                   <div class="flex items-center justify-between gap-4 mb-1">
+                       <span>FINGERPRINT:</span>
+                       <span class="text-white">SPOOFED</span>
+                   </div>
+                   <div class="flex items-center justify-between gap-4 mb-1">
+                       <span>WEBGL:</span>
+                       <span class="text-white">MASKED</span>
+                   </div>
+                   <div class="flex items-center justify-between gap-4">
+                       <span>TRACKERS:</span>
+                       <span id="tracker-count" class="text-red-400">0 BLOCKED</span>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </section>
+
+   <!-- STATS BANNER -->
+   <section class="border-y border-gray-900 bg-[#080808]">
+       <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
+           <div class="text-center md:text-left">
+               <div class="text-4xl font-bold text-white mb-1 display-font text-[#00ff88]">100%</div>
+               <div class="text-sm text-gray-500 uppercase tracking-wider">Undetected</div>
+           </div>
+           <div class="text-center md:text-left">
+               <div class="text-4xl font-bold text-white mb-1 display-font">+25%</div>
+               <div class="text-sm text-gray-500 uppercase tracking-wider">Security vs Competitors</div>
+           </div>
+           <div class="text-center md:text-left">
+               <div class="text-4xl font-bold text-white mb-1 display-font">Unique</div>
+               <div class="text-sm text-gray-500 uppercase tracking-wider">Fingerprint per Profile</div>
+           </div>
+           <div class="text-center md:text-left">
+               <div class="text-4xl font-bold text-white mb-1 display-font">Free</div>
+               <div class="text-sm text-gray-500 uppercase tracking-wider">Generous Starter Tier</div>
+           </div>
+       </div>
+   </section>
+
+   <!-- FEATURES SECTION -->
+   <section id="features" class="py-32 bg-[#050505] relative">
+       <div class="max-w-7xl mx-auto px-6">
+           <div class="mb-20">
+               <h2 class="text-4xl md:text-5xl font-bold mb-6">INVISIBLE <span class="text-[#00ff88]">BY DESIGN</span></h2>
+               <div class="h-1 w-20 bg-[#00ff88]"></div>
+           </div>
+
+           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+               <!-- Card 1 -->
+               <div class="group relative p-8 bg-[#0a0a0a] border border-gray-800 rounded-2xl hover:border-[#00ff88] transition-colors duration-300 reveal">
+                   <div class="w-12 h-12 bg-[#111] rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#00ff88] transition-colors duration-300">
+                       <!-- Fingerprint Icon -->
+                       <svg class="w-6 h-6 text-[#00ff88] group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.131A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.2-2.85.577-4.147l.156-.479c.43.052.844.114 1.226.19-.276.986-.427 2.023-.427 3.102 0 1.948.486 3.816 1.35 5.467"></path></svg>
+                   </div>
+                   <h3 class="text-xl font-bold mb-3">Authentic Fingerprints</h3>
+                   <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                       Unlike blockers that leave gaps, Under generates complete, consistent device fingerprints (Canvas, Audio, WebGL) that look 100% human.
+                   </p>
+               </div>
+
+               <!-- Card 2 -->
+               <div class="group relative p-8 bg-[#0a0a0a] border border-gray-800 rounded-2xl hover:border-[#00ff88] transition-colors duration-300 reveal delay-100">
+                   <div class="w-12 h-12 bg-[#111] rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#00ff88] transition-colors duration-300">
+                       <!-- Shield/Lock Icon -->
+                       <svg class="w-6 h-6 text-[#00ff88] group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                   </div>
+                   <h3 class="text-xl font-bold mb-3">Total Isolation</h3>
+                   <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                       Cookies, local storage, and cache are completely completely segregated per profile. 25% stronger encryption than industry standard.
+                   </p>
+               </div>
+
+               <!-- Card 3 -->
+               <div class="group relative p-8 bg-[#0a0a0a] border border-gray-800 rounded-2xl hover:border-[#00ff88] transition-colors duration-300 reveal delay-200">
+                   <div class="w-12 h-12 bg-[#111] rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#00ff88] transition-colors duration-300">
+                       <!-- Dashboard/Grid Icon -->
+                       <svg class="w-6 h-6 text-[#00ff88] group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                   </div>
+                   <h3 class="text-xl font-bold mb-3">Clean Dashboard</h3>
+                   <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                       Manage hundreds of profiles with zero clutter. Tag, categorize, and share profiles with your team instantly.
+                   </p>
+               </div>
+           </div>
+       </div>
+   </section>
+
+   <!-- UI PREVIEW SECTION -->
+   <section class="py-20 bg-[#080808] border-t border-gray-900">
+       <div class="max-w-7xl mx-auto px-6 text-center">
+           <h2 class="text-3xl md:text-5xl font-bold mb-12">THE DASHBOARD</h2>
+           
+           <!-- Mockup Window -->
+           <div class="relative max-w-5xl mx-auto bg-[#0a0a0a] border border-gray-800 rounded-xl overflow-hidden shadow-2xl">
+               <!-- Title Bar -->
+               <div class="h-8 bg-[#111] border-b border-gray-800 flex items-center px-4 gap-2">
+                   <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                   <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                   <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                   <div class="ml-4 text-xs text-gray-500 font-mono">Under Browser - Profile Manager</div>
+               </div>
+               <!-- Content Mockup -->
+               <div class="p-8 text-left">
+                   <div class="flex justify-between items-center mb-6">
+                       <div class="text-xl font-bold">My Profiles</div>
+                       <button class="px-4 py-2 bg-[#00ff88] text-black text-sm font-bold rounded">+ New Profile</button>
+                   </div>
+                   <!-- Table Header -->
+                   <div class="grid grid-cols-5 text-xs text-gray-500 uppercase tracking-wider mb-4 border-b border-gray-800 pb-2">
+                       <div class="col-span-2">Profile Name</div>
+                       <div>Status</div>
+                       <div>Proxy</div>
+                       <div>Last Active</div>
+                   </div>
+                   <!-- Row 1 -->
+                   <div class="grid grid-cols-5 text-sm py-3 border-b border-gray-800 items-center hover:bg-white/5 transition-colors cursor-pointer">
+                       <div class="col-span-2 flex items-center gap-3">
+                           <div class="w-8 h-8 bg-blue-900/30 rounded flex items-center justify-center text-blue-400 font-bold">A1</div>
+                           <span>Affiliate_Camp_01</span>
+                       </div>
+                       <div class="text-[#00ff88] text-xs font-bold">● Protected</div>
+                       <div class="text-gray-400 font-mono">US-NY-104</div>
+                       <div class="text-gray-400">2 min ago</div>
+                   </div>
+                   <!-- Row 2 -->
+                   <div class="grid grid-cols-5 text-sm py-3 border-b border-gray-800 items-center hover:bg-white/5 transition-colors cursor-pointer">
+                       <div class="col-span-2 flex items-center gap-3">
+                           <div class="w-8 h-8 bg-purple-900/30 rounded flex items-center justify-center text-purple-400 font-bold">E4</div>
+                           <span>Ecom_Store_Manage</span>
+                       </div>
+                       <div class="text-[#00ff88] text-xs font-bold">● Protected</div>
+                       <div class="text-gray-400 font-mono">DE-BER-402</div>
+                       <div class="text-gray-400">1 hour ago</div>
+                   </div>
+                    <!-- Row 3 -->
+                    <div class="grid grid-cols-5 text-sm py-3 border-b border-gray-800 items-center hover:bg-white/5 transition-colors cursor-pointer">
+                       <div class="col-span-2 flex items-center gap-3">
+                           <div class="w-8 h-8 bg-orange-900/30 rounded flex items-center justify-center text-orange-400 font-bold">S9</div>
+                           <span>Social_Growth_Bot</span>
+                       </div>
+                       <div class="text-[#00ff88] text-xs font-bold">● Protected</div>
+                       <div class="text-gray-400 font-mono">FR-PAR-991</div>
+                       <div class="text-gray-400">5 hours ago</div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </section>
+
+   <!-- PRICING -->
+   <section id="pricing" class="py-20 bg-[#050505]">
+       <div class="max-w-7xl mx-auto px-6">
+           <h2 class="text-3xl md:text-5xl font-bold mb-16 text-center">SCALABLE <span class="text-[#00ff88]">ANONYMITY</span></h2>
+           
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+               <!-- Free Tier -->
+               <div class="p-8 border border-gray-800 rounded-2xl bg-[#0a0a0a] flex flex-col">
+                   <h3 class="text-2xl font-bold text-white mb-2">Starter</h3>
+                   <div class="text-4xl font-bold mb-6 text-gray-400">$0 <span class="text-lg font-normal">/mo</span></div>
+                   <ul class="space-y-4 mb-8 flex-1 text-sm text-gray-300">
+                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 10 Unique Profiles</li>
+                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Basic Fingerprint Protection</li>
+                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Local Storage</li>
+                   </ul>
+                   <button class="w-full py-3 border border-gray-600 rounded-lg hover:border-white transition-colors font-bold">Download Free</button>
+               </div>
+
+               <!-- Pro Tier -->
+               <div class="p-8 border border-[#00ff88] rounded-2xl bg-[#00ff88]/5 relative flex flex-col">
+                   <div class="absolute top-0 right-0 bg-[#00ff88] text-black text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">BEST VALUE</div>
+                   <h3 class="text-2xl font-bold text-white mb-2">Professional</h3>
+                   <div class="text-4xl font-bold mb-6 text-[#00ff88]">$49 <span class="text-lg font-normal text-gray-400">/mo</span></div>
+                   <ul class="space-y-4 mb-8 flex-1 text-sm text-gray-300">
+                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <strong class="text-white">Unlimited Profiles</strong></li>
+                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Advanced Canvas Spoofing</li>
+                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Team Sharing & API Access</li>
+                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Cloud Sync</li>
+                   </ul>
+                   <button class="w-full py-3 bg-[#00ff88] text-black rounded-lg hover:bg-[#00cc6a] transition-colors font-bold shadow-[0_0_20px_rgba(0,255,136,0.2)]">Get Unlimited Access</button>
+               </div>
+           </div>
+       </div>
+   </section>
+
+   <!-- FOOTER -->
+   <footer class="bg-black border-t border-gray-900 pt-20 pb-10">
+       <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+           <div class="col-span-1 md:col-span-2">
+               <div class="flex items-center gap-2 mb-6">
+                   <svg class="w-6 h-6 text-[#00ff88]" viewBox="0 0 300 300" fill="none">
+                       <circle cx="150" cy="150" r="28" fill="currentColor" />
+                       <path d="M50 150 C50 205 94 250 150 250 C205 250 250 205 250 150" stroke="currentColor" stroke-width="30" stroke-linecap="round"/>
+                       <path d="M30 120 C60 50 150 20 150 20 C150 20 240 50 270 120" stroke="currentColor" stroke-width="30" stroke-linecap="round" stroke-opacity="0.5"/>
+                   </svg>
+                   <span class="font-bold text-xl tracking-wider display-font">UNDER</span>
+               </div>
+               <p class="text-gray-500 max-w-sm">
+                   The ultimate privacy shield for affiliate marketers, e-commerce managers, and privacy advocates.
+               </p>
+           </div>
+           
+           <div>
+               <h4 class="text-white font-bold mb-4 uppercase text-sm tracking-wider">Browser</h4>
+               <ul class="space-y-2 text-gray-500 text-sm">
+                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Download</a></li>
+                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Features</a></li>
+                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Pricing</a></li>
+                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Fingerprint Checker</a></li>
+               </ul>
+           </div>
+
+           <div>
+               <h4 class="text-white font-bold mb-4 uppercase text-sm tracking-wider">Support</h4>
+               <ul class="space-y-2 text-gray-500 text-sm">
+                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Knowledge Base</a></li>
+                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Contact Us</a></li>
+                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">API Docs</a></li>
+               </ul>
+           </div>
+       </div>
+       
+       <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600 pt-8 border-t border-gray-900">
+           <div>© 2024 Under Browser Ltd. All rights reserved.</div>
+           <div class="flex gap-6 mt-4 md:mt-0">
+               <a href="#" class="hover:text-white">Privacy Policy</a>
+               <a href="#" class="hover:text-white">Terms of Service</a>
+           </div>
+       </div>
+   </footer>
+
+   <!-- SCRIPT FOR ANIMATIONS & RADAR -->
+   <script>
+       // --- 1. Navbar Glass Effect ---
+       const navbar = document.getElementById('navbar');
+       window.addEventListener('scroll', () => {
+           if (window.scrollY > 50) {
+               navbar.classList.add('bg-black/80', 'backdrop-blur-md', 'border-[#00ff88]/20');
+               navbar.classList.remove('border-transparent');
+           } else {
+               navbar.classList.remove('bg-black/80', 'backdrop-blur-md', 'border-[#00ff88]/20');
+               navbar.classList.add('border-transparent');
+           }
+       });
+
+       // --- 2. Scroll Reveal Observer ---
+       const revealElements = document.querySelectorAll('.reveal');
+       const revealObserver = new IntersectionObserver((entries) => {
+           entries.forEach(entry => {
+               if (entry.isIntersecting) {
+                   entry.target.classList.add('active');
+               }
+           });
+       }, { threshold: 0.1 });
+
+       revealElements.forEach(el => revealObserver.observe(el));
+
+       // --- 3. Radar Canvas Simulation (Updated for "Blocking") ---
+       const canvas = document.getElementById('radarCanvas');
+       const ctx = canvas.getContext('2d');
+       let angle = 0;
+       let blockedCount = 0;
+
+       // Random tracking attempts (blips)
+       const threats = [
+           { r: 120, a: 45, s: 0.5, type: 'tracker' },
+           { r: 200, a: 180, s: 0.8, type: 'tracker' },
+           { r: 250, a: 300, s: 0.3, type: 'fingerprinter' }
+       ];
+
+       function drawRadar() {
+           // Scale correction
+           const width = canvas.width;
+           const height = canvas.height;
+           const cx = width / 2;
+           const cy = height / 2;
+           
+           // Clear
+           ctx.clearRect(0, 0, width, height);
+
+           // Draw Static Rings
+           ctx.strokeStyle = '#1a1a1a';
+           ctx.lineWidth = 1;
+           
+           [50, 100, 150, 200, 250].forEach(r => {
+               ctx.beginPath();
+               ctx.arc(cx, cy, r, 0, Math.PI * 2);
+               ctx.stroke();
+           });
+
+           // Crosshairs
+           ctx.beginPath();
+           ctx.moveTo(cx, 0); ctx.lineTo(cx, height);
+           ctx.moveTo(0, cy); ctx.lineTo(width, cy);
+           ctx.stroke();
+
+           // Draw Threats
+           threats.forEach(t => {
+               // Move slowly
+               t.a += 0.2 * t.s;
+               
+               const rad = t.a * (Math.PI / 180);
+               const x = cx + t.r * Math.cos(rad);
+               const y = cy + t.r * Math.sin(rad);
+
+               // Draw "Blocked" X or Blip
+               // Calculate angular distance to sweep
+               const sweepRad = angle % (Math.PI * 2);
+               const threatRadNorm = rad % (Math.PI * 2);
+               const diff = Math.abs(sweepRad - threatRadNorm);
+
+               // If sweep hits threat, flash it red
+               if (diff < 0.2) {
+                   ctx.fillStyle = '#ff4444'; // Red for blocked threat
+                   ctx.shadowBlur = 15;
+                   ctx.shadowColor = '#ff4444';
+                   
+                   // Increment counter occasionally for effect
+                   if (Math.random() > 0.98) {
+                       blockedCount++;
+                       document.getElementById('tracker-count').innerText = `${blockedCount} BLOCKED`;
+                   }
+               } else {
+                   ctx.fillStyle = '#333'; // Dim when not scanned
+                   ctx.shadowBlur = 0;
+               }
+
+               ctx.beginPath();
+               ctx.arc(x, y, 5, 0, Math.PI * 2);
+               ctx.fill();
+           });
+
+           // Draw The Sweep
+           const sweepGradient = ctx.createConicGradient(angle, cx, cy);
+           sweepGradient.addColorStop(0, 'rgba(0, 255, 136, 0.4)'); // Leading edge
+           sweepGradient.addColorStop(0.1, 'rgba(0, 255, 136, 0)'); // Fade out
+           sweepGradient.addColorStop(1, 'rgba(0, 255, 136, 0)');
+
+           ctx.fillStyle = sweepGradient;
+           ctx.beginPath();
+           ctx.arc(cx, cy, 280, 0, Math.PI * 2);
+           ctx.fill();
+
+           // Leading Edge Line
+           ctx.strokeStyle = '#00ff88';
+           ctx.lineWidth = 2;
+           ctx.beginPath();
+           ctx.moveTo(cx, cy);
+           ctx.lineTo(cx + 280 * Math.cos(angle), cy + 280 * Math.sin(angle));
+           ctx.stroke();
+
+           // Rotate
+           angle += 0.03;
+
+           requestAnimationFrame(drawRadar);
+       }
+
+       // Init Radar
+       drawRadar();
+
+   </script>
+</body>
+</html>
