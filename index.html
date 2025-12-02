@@ -1,509 +1,711 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Under Browser | Ultimate Anti-Detect Privacy</title>
-   <script src="https://cdn.tailwindcss.com"></script>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-   
-   <style>
-       :root {
-           --neon-mint: #00ff88;
-           --void-black: #050505;
-           --surface: #0a0a0a;
-           --surface-highlight: #111111;
-       }
-       
-       body {
-           font-family: 'Inter', sans-serif;
-           background-color: var(--void-black);
-           color: white;
-           overflow-x: hidden;
-       }
+import React, { useState, useEffect } from 'react';
+import {
+ Shield,
+ Globe,
+ Layers,
+ Users,
+ Cpu,
+ Zap,
+ Check,
+ Menu,
+ X,
+ Fingerprint,
+ Lock,
+ LayoutGrid,
+ ChevronDown,
+ ArrowRight,
+ Download,
+ Terminal,
+ Play,
+ Settings,
+ Plus,
+ Search,
+ MoreVertical,
+ LogOut,
+ Monitor,
+ Apple,
+ Command,
+ AlertCircle
+} from 'lucide-react';
 
-       h1, h2, h3, h4, h5, h6, .display-font {
-           font-family: 'Space Grotesk', sans-serif;
-       }
+// --- Shared Components ---
 
-       /* Smooth reveal animation classes */
-       .reveal {
-           opacity: 0;
-           transform: translateY(30px);
-           transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-       }
+const Logo = () => (
+ <div className="flex items-center space-x-2 cursor-pointer">
+   <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
+     <Fingerprint className="text-white w-6 h-6" />
+   </div>
+   <span className="text-xl font-bold text-white tracking-tight">Navi<span className="text-indigo-500">Browser</span></span>
+ </div>
+);
 
-       .reveal.active {
-           opacity: 1;
-           transform: translateY(0);
-       }
+// --- Page Components ---
 
-       /* Custom Scrollbar */
-       ::-webkit-scrollbar {
-           width: 8px;
-       }
-       ::-webkit-scrollbar-track {
-           background: #000;
-       }
-       ::-webkit-scrollbar-thumb {
-           background: #333;
-           border-radius: 4px;
-       }
-       ::-webkit-scrollbar-thumb:hover {
-           background: var(--neon-mint);
-       }
+const HomePage = ({ navigateTo }) => {
+ const [activeFaq, setActiveFaq] = useState(null);
+ const toggleFaq = (index) => setActiveFaq(activeFaq === index ? null : index);
 
-       .grid-bg {
-           background-size: 40px 40px;
-           background-image:
-               linear-gradient(to right, rgba(0, 255, 136, 0.03) 1px, transparent 1px),
-               linear-gradient(to bottom, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
-       }
-   </style>
-</head>
-<body class="antialiased selection:bg-[#00ff88] selection:text-black">
+ const plans = [
+   {
+     name: "Starter",
+     price: "29",
+     period: "/mo",
+     profiles: "10 Browser Profiles",
+     features: ["Unique Fingerprints", "Canvas & WebGL Protection", "Proxy Integration", "24/7 Support"],
+     isPopular: false
+   },
+   {
+     name: "Agency",
+     price: "99",
+     period: "/mo",
+     profiles: "100 Browser Profiles",
+     features: ["Everything in Starter", "Team Collaboration (3 Seats)", "API Access", "Cookie Robot", "Profile Transfer"],
+     isPopular: true
+   },
+   {
+     name: "Enterprise",
+     price: "249",
+     period: "/mo",
+     profiles: "Unlimited Profiles",
+     features: ["Everything in Agency", "Unlimited Team Seats", "Dedicated Manager", "Custom Fingerprints", "Priority Automation"],
+     isPopular: false
+   }
+ ];
 
-   <!-- NAVIGATION -->
-   <nav id="navbar" class="fixed w-full z-50 top-0 transition-all duration-300 border-b border-transparent">
-       <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-           <!-- Brand -->
-           <a href="#" class="flex items-center gap-3 group">
-               <!-- Logo: Stylized 'U' or Shield/Radar combo -->
-               <svg class="w-8 h-8 text-[#00ff88] transition-transform duration-500 group-hover:scale-110" viewBox="0 0 300 300" fill="none">
-                   <circle cx="150" cy="150" r="28" fill="currentColor" />
-                   <!-- The "Under" Arc - implying being below the surface -->
-                   <path d="M50 150 C50 205 94 250 150 250 C205 250 250 205 250 150" stroke="currentColor" stroke-width="30" stroke-linecap="round"/>
-                   <!-- The Shield/Cover Arc -->
-                   <path d="M30 120 C60 50 150 20 150 20 C150 20 240 50 270 120" stroke="currentColor" stroke-width="30" stroke-linecap="round" stroke-opacity="0.5"/>
-               </svg>
-               <span class="font-bold text-xl tracking-wider display-font">UNDER</span>
-           </a>
+ const faqs = [
+   {
+     question: "How does NaviBrowser protect my privacy?",
+     answer: "NaviBrowser manages your digital fingerprint by isolating cookies, local storage, and cache for each profile. We spoof hardware parameters like Canvas, WebGL, and AudioContext to make each profile look like a distinct, unique device."
+   },
+   {
+     question: "Can I automate browser tasks?",
+     answer: "Yes! We support Selenium, Puppeteer, and Playwright integration via our local API, making it perfect for workflow automation and testing."
+   },
+   {
+     question: "Is proxy management included?",
+     answer: "We provide seamless integration for HTTP, HTTPS, SOCKS4, and SOCKS5 proxies. You can paste proxies in bulk or buy them directly from our trusted partners within the dashboard."
+   },
+   {
+     question: "Do you offer a free trial?",
+     answer: "Yes, we offer a 7-day trial with full access to the Agency plan features so you can test our fingerprinting technology extensively."
+   }
+ ];
 
-           <!-- Links (Desktop) -->
-           <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-400">
-               <a href="#features" class="hover:text-white transition-colors">Features</a>
-               <a href="#security" class="hover:text-white transition-colors">Security</a>
-               <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
-           </div>
+ return (
+   <>
+     {/* Hero Section */}
+     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
+         <div className="absolute top-20 left-20 w-72 h-72 bg-indigo-600/20 rounded-full blur-[100px]"></div>
+         <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px]"></div>
+       </div>
 
-           <!-- CTA -->
-           <div class="flex items-center gap-4">
-               <a href="#" class="hidden md:block text-sm font-semibold hover:text-[#00ff88]">Log In</a>
-               <a href="#download" class="px-6 py-2 bg-white text-black font-semibold rounded-full hover:bg-[#00ff88] transition-all duration-300 transform hover:scale-105">
-                   Download Free
-               </a>
-           </div>
-           
-           <!-- Mobile Menu Button -->
-           <button class="md:hidden text-white ml-4">
-               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+         <div className="inline-flex items-center space-x-2 bg-slate-900/50 border border-slate-800 rounded-full px-4 py-1.5 mb-8 backdrop-blur-sm animate-fade-in-up">
+           <span className="flex h-2 w-2 rounded-full bg-green-500"></span>
+           <span className="text-sm font-medium text-slate-300">v3.0 is now live with enhanced kernel</span>
+         </div>
+         
+         <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-8">
+           The Ultimate Anti-Detect <br className="hidden md:block" />
+           <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+             Browser Solution
+           </span>
+         </h1>
+         
+         <p className="max-w-2xl mx-auto text-xl text-slate-400 mb-10 leading-relaxed">
+           Manage hundreds of unique browser profiles from a single dashboard.
+           Perfect for affiliate marketing, e-commerce, and digital agencies.
+         </p>
+         
+         <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+           <button
+             onClick={() => navigateTo('download')}
+             className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-xl shadow-indigo-600/20 flex items-center justify-center"
+           >
+             Download for Windows <ArrowRight className="ml-2 w-5 h-5" />
            </button>
+           <button className="w-full sm:w-auto bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all border border-slate-700 flex items-center justify-center">
+             View Documentation
+           </button>
+         </div>
+
+         <div className="mt-12 pt-8 border-t border-slate-800/50 flex flex-wrap justify-center gap-8 opacity-60 grayscale">
+           {['GlobalAds', 'MediaScale', 'AffilatePro', 'SecureNet'].map((logo) => (
+             <span key={logo} className="text-xl font-bold text-slate-500">{logo}</span>
+           ))}
+         </div>
        </div>
-   </nav>
+     </section>
 
-   <!-- HERO SECTION -->
-   <section class="relative min-h-screen flex items-center pt-20 overflow-hidden grid-bg">
-       <!-- Ambient Background Glow -->
-       <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-[#00ff88] opacity-[0.04] rounded-full blur-[150px] pointer-events-none"></div>
+     {/* Features Grid */}
+     <section id="features" className="py-24 bg-slate-900/50">
+       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         <div className="text-center mb-16">
+           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Built for invisibility</h2>
+           <p className="text-slate-400 max-w-2xl mx-auto">
+             Our advanced fingerprinting technology ensures each profile appears as a completely distinct physical device.
+           </p>
+         </div>
 
-       <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-           
-           <!-- Text Content -->
-           <div class="reveal active pt-10 lg:pt-0">
-               <div class="inline-flex items-center gap-2 px-3 py-1 border border-[#00ff88]/30 rounded-full bg-[#00ff88]/5 text-[#00ff88] text-xs font-bold tracking-widest uppercase mb-6">
-                   <span class="w-2 h-2 rounded-full bg-[#00ff88] animate-pulse"></span>
-                   System Status: Undetected
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+           {[
+             {
+               icon: <Fingerprint className="w-8 h-8 text-indigo-400" />,
+               title: "Digital Fingerprint Mgmt",
+               desc: "We alter Canvas, WebGL, Fonts, and Audio context to create a genuine device identity for every profile."
+             },
+             {
+               icon: <Users className="w-8 h-8 text-purple-400" />,
+               title: "Team Collaboration",
+               desc: "Share profiles securely with team members without sharing passwords. Assign roles and permissions instantly."
+             },
+             {
+               icon: <Cpu className="w-8 h-8 text-blue-400" />,
+               title: "Automation Ready",
+               desc: "Fully compatible with Puppeteer, Selenium, and Playwright. Build complex workflows via our local API."
+             },
+             {
+               icon: <Shield className="w-8 h-8 text-green-400" />,
+               title: "Cookie Management",
+               desc: "Import, export, and warm up cookies automatically. Keep sessions active and trusted by platforms."
+             },
+             {
+               icon: <Globe className="w-8 h-8 text-pink-400" />,
+               title: "Proxy Integration",
+               desc: "Native support for all major proxy protocols. Check proxy health and location directly within the browser."
+             },
+             {
+               icon: <LayoutGrid className="w-8 h-8 text-orange-400" />,
+               title: "Intuitive Dashboard",
+               desc: "Tag, group, and filter thousands of profiles easily. Bulk actions allow you to manage scale effortlessly."
+             }
+           ].map((feature, idx) => (
+             <div key={idx} className="bg-slate-950 p-8 rounded-2xl border border-slate-800 hover:border-indigo-500/50 transition-all hover:shadow-2xl hover:shadow-indigo-500/10 group">
+               <div className="mb-6 p-3 bg-slate-900 rounded-lg w-fit group-hover:bg-slate-800 transition-colors">
+                 {feature.icon}
                </div>
-               <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6 tracking-tighter">
-                   BROWSE <br>
-                   <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00ff88] to-emerald-600">UNDER</span> THE RADAR.
-               </h1>
-               <p class="text-gray-400 text-lg md:text-xl max-w-lg mb-8 leading-relaxed">
-                   The only privacy browser that generates a unique, 100% authentic fingerprint for every profile. Beat tracking algorithms and stay invisible.
+               <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+               <p className="text-slate-400 leading-relaxed">
+                 {feature.desc}
                </p>
-               <div class="flex flex-col sm:flex-row gap-4">
-                   <button class="px-8 py-4 bg-[#00ff88] text-black font-bold text-lg rounded-lg hover:bg-[#00cc6a] transition-colors shadow-[0_0_30px_rgba(0,255,136,0.3)] flex items-center justify-center gap-2">
-                       Get Under Free
-                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                   </button>
-                   <button class="px-8 py-4 border border-gray-700 text-white font-medium text-lg rounded-lg hover:border-white hover:bg-white/5 transition-all">
-                       Compare Plans
-                   </button>
-               </div>
-               
-               <div class="mt-8 text-xs text-gray-500 font-mono">
-                   * Windows, macOS, and Linux supported.
-               </div>
-           </div>
-
-           <!-- Interactive Radar Visualizer -->
-           <div class="relative h-[500px] w-full flex items-center justify-center reveal delay-200">
-               <!-- We use the radar to show "scanning" but "blocking" results -->
-               <canvas id="radarCanvas" width="600" height="600" class="w-full max-w-[500px] aspect-square"></canvas>
-               
-               <!-- Overlay Interface UI -->
-               <div class="absolute bottom-10 left-10 text-[10px] font-mono text-[#00ff88] opacity-80 bg-black/50 p-4 rounded border border-gray-800 backdrop-blur-sm">
-                   <div class="flex items-center justify-between gap-4 mb-1">
-                       <span>FINGERPRINT:</span>
-                       <span class="text-white">SPOOFED</span>
-                   </div>
-                   <div class="flex items-center justify-between gap-4 mb-1">
-                       <span>WEBGL:</span>
-                       <span class="text-white">MASKED</span>
-                   </div>
-                   <div class="flex items-center justify-between gap-4">
-                       <span>TRACKERS:</span>
-                       <span id="tracker-count" class="text-red-400">0 BLOCKED</span>
-                   </div>
-               </div>
-           </div>
+             </div>
+           ))}
+         </div>
        </div>
-   </section>
+     </section>
 
-   <!-- STATS BANNER -->
-   <section class="border-y border-gray-900 bg-[#080808]">
-       <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
-           <div class="text-center md:text-left">
-               <div class="text-4xl font-bold text-white mb-1 display-font text-[#00ff88]">100%</div>
-               <div class="text-sm text-gray-500 uppercase tracking-wider">Undetected</div>
-           </div>
-           <div class="text-center md:text-left">
-               <div class="text-4xl font-bold text-white mb-1 display-font">+25%</div>
-               <div class="text-sm text-gray-500 uppercase tracking-wider">Security vs Competitors</div>
-           </div>
-           <div class="text-center md:text-left">
-               <div class="text-4xl font-bold text-white mb-1 display-font">Unique</div>
-               <div class="text-sm text-gray-500 uppercase tracking-wider">Fingerprint per Profile</div>
-           </div>
-           <div class="text-center md:text-left">
-               <div class="text-4xl font-bold text-white mb-1 display-font">Free</div>
-               <div class="text-sm text-gray-500 uppercase tracking-wider">Generous Starter Tier</div>
-           </div>
-       </div>
-   </section>
+     {/* Pricing */}
+     <section id="pricing" className="py-24 bg-slate-900/30 border-y border-slate-800">
+       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         <div className="text-center mb-16">
+           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Simple, Scalable Pricing</h2>
+           <p className="text-slate-400">Choose the plan that fits your operation scale.</p>
+         </div>
 
-   <!-- FEATURES SECTION -->
-   <section id="features" class="py-32 bg-[#050505] relative">
-       <div class="max-w-7xl mx-auto px-6">
-           <div class="mb-20">
-               <h2 class="text-4xl md:text-5xl font-bold mb-6">INVISIBLE <span class="text-[#00ff88]">BY DESIGN</span></h2>
-               <div class="h-1 w-20 bg-[#00ff88]"></div>
-           </div>
-
-           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-               <!-- Card 1 -->
-               <div class="group relative p-8 bg-[#0a0a0a] border border-gray-800 rounded-2xl hover:border-[#00ff88] transition-colors duration-300 reveal">
-                   <div class="w-12 h-12 bg-[#111] rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#00ff88] transition-colors duration-300">
-                       <!-- Fingerprint Icon -->
-                       <svg class="w-6 h-6 text-[#00ff88] group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.131A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.2-2.85.577-4.147l.156-.479c.43.052.844.114 1.226.19-.276.986-.427 2.023-.427 3.102 0 1.948.486 3.816 1.35 5.467"></path></svg>
-                   </div>
-                   <h3 class="text-xl font-bold mb-3">Authentic Fingerprints</h3>
-                   <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                       Unlike blockers that leave gaps, Under generates complete, consistent device fingerprints (Canvas, Audio, WebGL) that look 100% human.
-                   </p>
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+           {plans.map((plan, idx) => (
+             <div key={idx} className={`relative bg-slate-950 rounded-2xl p-8 border ${plan.isPopular ? 'border-indigo-500 shadow-2xl shadow-indigo-500/10' : 'border-slate-800'}`}>
+               {plan.isPopular && (
+                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                   Most Popular
+                 </div>
+               )}
+               <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
+               <div className="flex items-baseline mb-6">
+                 <span className="text-4xl font-extrabold text-white">${plan.price}</span>
+                 <span className="text-slate-500 ml-2">{plan.period}</span>
                </div>
-
-               <!-- Card 2 -->
-               <div class="group relative p-8 bg-[#0a0a0a] border border-gray-800 rounded-2xl hover:border-[#00ff88] transition-colors duration-300 reveal delay-100">
-                   <div class="w-12 h-12 bg-[#111] rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#00ff88] transition-colors duration-300">
-                       <!-- Shield/Lock Icon -->
-                       <svg class="w-6 h-6 text-[#00ff88] group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                   </div>
-                   <h3 class="text-xl font-bold mb-3">Total Isolation</h3>
-                   <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                       Cookies, local storage, and cache are completely completely segregated per profile. 25% stronger encryption than industry standard.
-                   </p>
-               </div>
-
-               <!-- Card 3 -->
-               <div class="group relative p-8 bg-[#0a0a0a] border border-gray-800 rounded-2xl hover:border-[#00ff88] transition-colors duration-300 reveal delay-200">
-                   <div class="w-12 h-12 bg-[#111] rounded-lg flex items-center justify-center mb-6 group-hover:bg-[#00ff88] transition-colors duration-300">
-                       <!-- Dashboard/Grid Icon -->
-                       <svg class="w-6 h-6 text-[#00ff88] group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                   </div>
-                   <h3 class="text-xl font-bold mb-3">Clean Dashboard</h3>
-                   <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                       Manage hundreds of profiles with zero clutter. Tag, categorize, and share profiles with your team instantly.
-                   </p>
-               </div>
-           </div>
-       </div>
-   </section>
-
-   <!-- UI PREVIEW SECTION -->
-   <section class="py-20 bg-[#080808] border-t border-gray-900">
-       <div class="max-w-7xl mx-auto px-6 text-center">
-           <h2 class="text-3xl md:text-5xl font-bold mb-12">THE DASHBOARD</h2>
-           
-           <!-- Mockup Window -->
-           <div class="relative max-w-5xl mx-auto bg-[#0a0a0a] border border-gray-800 rounded-xl overflow-hidden shadow-2xl">
-               <!-- Title Bar -->
-               <div class="h-8 bg-[#111] border-b border-gray-800 flex items-center px-4 gap-2">
-                   <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                   <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                   <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                   <div class="ml-4 text-xs text-gray-500 font-mono">Under Browser - Profile Manager</div>
-               </div>
-               <!-- Content Mockup -->
-               <div class="p-8 text-left">
-                   <div class="flex justify-between items-center mb-6">
-                       <div class="text-xl font-bold">My Profiles</div>
-                       <button class="px-4 py-2 bg-[#00ff88] text-black text-sm font-bold rounded">+ New Profile</button>
-                   </div>
-                   <!-- Table Header -->
-                   <div class="grid grid-cols-5 text-xs text-gray-500 uppercase tracking-wider mb-4 border-b border-gray-800 pb-2">
-                       <div class="col-span-2">Profile Name</div>
-                       <div>Status</div>
-                       <div>Proxy</div>
-                       <div>Last Active</div>
-                   </div>
-                   <!-- Row 1 -->
-                   <div class="grid grid-cols-5 text-sm py-3 border-b border-gray-800 items-center hover:bg-white/5 transition-colors cursor-pointer">
-                       <div class="col-span-2 flex items-center gap-3">
-                           <div class="w-8 h-8 bg-blue-900/30 rounded flex items-center justify-center text-blue-400 font-bold">A1</div>
-                           <span>Affiliate_Camp_01</span>
-                       </div>
-                       <div class="text-[#00ff88] text-xs font-bold">● Protected</div>
-                       <div class="text-gray-400 font-mono">US-NY-104</div>
-                       <div class="text-gray-400">2 min ago</div>
-                   </div>
-                   <!-- Row 2 -->
-                   <div class="grid grid-cols-5 text-sm py-3 border-b border-gray-800 items-center hover:bg-white/5 transition-colors cursor-pointer">
-                       <div class="col-span-2 flex items-center gap-3">
-                           <div class="w-8 h-8 bg-purple-900/30 rounded flex items-center justify-center text-purple-400 font-bold">E4</div>
-                           <span>Ecom_Store_Manage</span>
-                       </div>
-                       <div class="text-[#00ff88] text-xs font-bold">● Protected</div>
-                       <div class="text-gray-400 font-mono">DE-BER-402</div>
-                       <div class="text-gray-400">1 hour ago</div>
-                   </div>
-                    <!-- Row 3 -->
-                    <div class="grid grid-cols-5 text-sm py-3 border-b border-gray-800 items-center hover:bg-white/5 transition-colors cursor-pointer">
-                       <div class="col-span-2 flex items-center gap-3">
-                           <div class="w-8 h-8 bg-orange-900/30 rounded flex items-center justify-center text-orange-400 font-bold">S9</div>
-                           <span>Social_Growth_Bot</span>
-                       </div>
-                       <div class="text-[#00ff88] text-xs font-bold">● Protected</div>
-                       <div class="text-gray-400 font-mono">FR-PAR-991</div>
-                       <div class="text-gray-400">5 hours ago</div>
-                   </div>
-               </div>
-           </div>
-       </div>
-   </section>
-
-   <!-- PRICING -->
-   <section id="pricing" class="py-20 bg-[#050505]">
-       <div class="max-w-7xl mx-auto px-6">
-           <h2 class="text-3xl md:text-5xl font-bold mb-16 text-center">SCALABLE <span class="text-[#00ff88]">ANONYMITY</span></h2>
-           
-           <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-               <!-- Free Tier -->
-               <div class="p-8 border border-gray-800 rounded-2xl bg-[#0a0a0a] flex flex-col">
-                   <h3 class="text-2xl font-bold text-white mb-2">Starter</h3>
-                   <div class="text-4xl font-bold mb-6 text-gray-400">$0 <span class="text-lg font-normal">/mo</span></div>
-                   <ul class="space-y-4 mb-8 flex-1 text-sm text-gray-300">
-                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 10 Unique Profiles</li>
-                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Basic Fingerprint Protection</li>
-                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Local Storage</li>
-                   </ul>
-                   <button class="w-full py-3 border border-gray-600 rounded-lg hover:border-white transition-colors font-bold">Download Free</button>
-               </div>
-
-               <!-- Pro Tier -->
-               <div class="p-8 border border-[#00ff88] rounded-2xl bg-[#00ff88]/5 relative flex flex-col">
-                   <div class="absolute top-0 right-0 bg-[#00ff88] text-black text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">BEST VALUE</div>
-                   <h3 class="text-2xl font-bold text-white mb-2">Professional</h3>
-                   <div class="text-4xl font-bold mb-6 text-[#00ff88]">$49 <span class="text-lg font-normal text-gray-400">/mo</span></div>
-                   <ul class="space-y-4 mb-8 flex-1 text-sm text-gray-300">
-                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> <strong class="text-white">Unlimited Profiles</strong></li>
-                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Advanced Canvas Spoofing</li>
-                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Team Sharing & API Access</li>
-                       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-[#00ff88]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Cloud Sync</li>
-                   </ul>
-                   <button class="w-full py-3 bg-[#00ff88] text-black rounded-lg hover:bg-[#00cc6a] transition-colors font-bold shadow-[0_0_20px_rgba(0,255,136,0.2)]">Get Unlimited Access</button>
-               </div>
-           </div>
-       </div>
-   </section>
-
-   <!-- FOOTER -->
-   <footer class="bg-black border-t border-gray-900 pt-20 pb-10">
-       <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-           <div class="col-span-1 md:col-span-2">
-               <div class="flex items-center gap-2 mb-6">
-                   <svg class="w-6 h-6 text-[#00ff88]" viewBox="0 0 300 300" fill="none">
-                       <circle cx="150" cy="150" r="28" fill="currentColor" />
-                       <path d="M50 150 C50 205 94 250 150 250 C205 250 250 205 250 150" stroke="currentColor" stroke-width="30" stroke-linecap="round"/>
-                       <path d="M30 120 C60 50 150 20 150 20 C150 20 240 50 270 120" stroke="currentColor" stroke-width="30" stroke-linecap="round" stroke-opacity="0.5"/>
-                   </svg>
-                   <span class="font-bold text-xl tracking-wider display-font">UNDER</span>
-               </div>
-               <p class="text-gray-500 max-w-sm">
-                   The ultimate privacy shield for affiliate marketers, e-commerce managers, and privacy advocates.
-               </p>
-           </div>
-           
-           <div>
-               <h4 class="text-white font-bold mb-4 uppercase text-sm tracking-wider">Browser</h4>
-               <ul class="space-y-2 text-gray-500 text-sm">
-                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Download</a></li>
-                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Features</a></li>
-                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Pricing</a></li>
-                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Fingerprint Checker</a></li>
+               <p className="text-slate-400 mb-6 pb-6 border-b border-slate-800">{plan.profiles}</p>
+               <ul className="space-y-4 mb-8">
+                 {plan.features.map((feat, fIdx) => (
+                   <li key={fIdx} className="flex items-start">
+                     <Check className="w-5 h-5 text-indigo-500 mr-3 shrink-0" />
+                     <span className="text-sm text-slate-300">{feat}</span>
+                   </li>
+                 ))}
                </ul>
-           </div>
-
-           <div>
-               <h4 class="text-white font-bold mb-4 uppercase text-sm tracking-wider">Support</h4>
-               <ul class="space-y-2 text-gray-500 text-sm">
-                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Knowledge Base</a></li>
-                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">Contact Us</a></li>
-                   <li><a href="#" class="hover:text-[#00ff88] transition-colors">API Docs</a></li>
-               </ul>
-           </div>
+               <button className={`w-full py-3 rounded-xl font-bold transition-all ${plan.isPopular ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-slate-800 hover:bg-slate-700 text-white'}`}>
+                 Select {plan.name}
+               </button>
+             </div>
+           ))}
+         </div>
        </div>
+     </section>
+
+     {/* FAQ */}
+     <section className="py-24">
+       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+         <h2 className="text-3xl font-bold text-white text-center mb-12">Frequently Asked Questions</h2>
+         <div className="space-y-4">
+           {faqs.map((faq, idx) => (
+             <div key={idx} className="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden">
+               <button
+                 onClick={() => toggleFaq(idx)}
+                 className="w-full px-6 py-4 flex items-center justify-between text-left focus:outline-none"
+               >
+                 <span className="font-medium text-slate-200">{faq.question}</span>
+                 <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform ${activeFaq === idx ? 'rotate-180' : ''}`} />
+               </button>
+               {activeFaq === idx && (
+                 <div className="px-6 pb-4 text-slate-400 text-sm leading-relaxed border-t border-slate-800/50 pt-4">
+                   {faq.answer}
+                 </div>
+               )}
+             </div>
+           ))}
+         </div>
+       </div>
+     </section>
+   </>
+ );
+};
+
+const DownloadPage = () => (
+ <div className="pt-32 pb-24 min-h-screen">
+   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div className="text-center mb-16">
+       <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-6">Download NaviBrowser</h1>
+       <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+         Choose your operating system to get started. Current version: v3.0.2 (Stable)
+       </p>
+     </div>
+
+     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+       {/* Windows */}
+       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:border-indigo-500 transition-all text-center group">
+         <div className="w-16 h-16 bg-blue-600/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-600/20 transition-colors">
+           <Monitor className="w-8 h-8 text-blue-500" />
+         </div>
+         <h3 className="text-2xl font-bold text-white mb-2">Windows</h3>
+         <p className="text-slate-400 mb-8">Windows 10, 11 (64-bit)</p>
+         <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-bold flex items-center justify-center transition-all">
+           <Download className="w-5 h-5 mr-2" /> Download .exe
+         </button>
+         <div className="mt-4 text-xs text-slate-500">MD5: a8f9...3b21</div>
+       </div>
+
+       {/* Mac */}
+       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:border-indigo-500 transition-all text-center group">
+         <div className="w-16 h-16 bg-slate-700/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-slate-700/30 transition-colors">
+           <Apple className="w-8 h-8 text-white" />
+         </div>
+         <h3 className="text-2xl font-bold text-white mb-2">macOS</h3>
+         <p className="text-slate-400 mb-8">Ventura, Sonoma (Intel & Silicon)</p>
+         <div className="space-y-3">
+           <button className="w-full bg-slate-800 hover:bg-slate-700 text-white py-3 rounded-xl font-bold flex items-center justify-center transition-all border border-slate-700">
+             <Download className="w-5 h-5 mr-2" /> Apple Silicon (M1/M2)
+           </button>
+           <button className="w-full bg-slate-800 hover:bg-slate-700 text-white py-3 rounded-xl font-bold flex items-center justify-center transition-all border border-slate-700">
+             <Download className="w-5 h-5 mr-2" /> Intel Chip
+           </button>
+         </div>
+       </div>
+
+       {/* Linux */}
+       <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:border-indigo-500 transition-all text-center group">
+         <div className="w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-yellow-500/20 transition-colors">
+           <Terminal className="w-8 h-8 text-yellow-500" />
+         </div>
+         <h3 className="text-2xl font-bold text-white mb-2">Linux</h3>
+         <p className="text-slate-400 mb-8">Ubuntu 20.04+, Debian, Fedora</p>
+         <button className="w-full bg-slate-800 hover:bg-slate-700 text-white py-3 rounded-xl font-bold flex items-center justify-center transition-all border border-slate-700">
+           <Download className="w-5 h-5 mr-2" /> Download .AppImage
+         </button>
+         <div className="mt-4 text-xs text-slate-500">
+           Also available via <span className="font-mono text-indigo-400">snap</span>
+         </div>
+       </div>
+     </div>
+     
+     <div className="max-w-3xl mx-auto mt-20 pt-10 border-t border-slate-800">
+       <h3 className="text-xl font-bold text-white mb-4">System Requirements</h3>
+       <ul className="space-y-2 text-slate-400">
+         <li className="flex items-center"><Check className="w-4 h-4 text-green-500 mr-2" /> 4GB RAM minimum (8GB recommended)</li>
+         <li className="flex items-center"><Check className="w-4 h-4 text-green-500 mr-2" /> 1GB free disk space</li>
+         <li className="flex items-center"><Check className="w-4 h-4 text-green-500 mr-2" /> Active internet connection for proxy usage</li>
+       </ul>
+     </div>
+   </div>
+ </div>
+);
+
+const LoginPage = ({ onLogin }) => {
+ const [email, setEmail] = useState('');
+ const [loading, setLoading] = useState(false);
+
+ const handleSubmit = (e) => {
+   e.preventDefault();
+   setLoading(true);
+   // Simulate API call
+   setTimeout(() => {
+     setLoading(false);
+     onLogin();
+   }, 1500);
+ };
+
+ return (
+   <div className="pt-32 pb-24 min-h-screen flex items-center justify-center">
+     <div className="w-full max-w-md p-8 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl">
+       <div className="text-center mb-8">
+          <div className="inline-block p-3 bg-indigo-600/10 rounded-xl mb-4">
+            <Fingerprint className="w-8 h-8 text-indigo-500" />
+          </div>
+          <h2 className="text-2xl font-bold text-white">Welcome Back</h2>
+          <p className="text-slate-400">Sign in to manage your browser profiles</p>
+       </div>
+
+       <form onSubmit={handleSubmit} className="space-y-6">
+         <div>
+           <label className="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
+           <input
+             type="email"
+             required
+             value={email}
+             onChange={(e) => setEmail(e.target.value)}
+             className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-colors"
+             placeholder="you@company.com"
+           />
+         </div>
+         <div>
+           <label className="block text-sm font-medium text-slate-300 mb-2">Password</label>
+           <input
+             type="password"
+             required
+             defaultValue="password"
+             className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-colors"
+             placeholder="••••••••"
+           />
+         </div>
+         
+         <button
+           type="submit"
+           disabled={loading}
+           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg font-bold transition-all flex items-center justify-center"
+         >
+           {loading ? (
+             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+           ) : (
+             "Sign In to Dashboard"
+           )}
+         </button>
+       </form>
        
-       <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600 pt-8 border-t border-gray-900">
-           <div>© 2024 Under Browser Ltd. All rights reserved.</div>
-           <div class="flex gap-6 mt-4 md:mt-0">
-               <a href="#" class="hover:text-white">Privacy Policy</a>
-               <a href="#" class="hover:text-white">Terms of Service</a>
-           </div>
+       <p className="mt-6 text-center text-sm text-slate-500">
+         Don't have an account? <a href="#" className="text-indigo-400 hover:underline">Start Free Trial</a>
+       </p>
+     </div>
+   </div>
+ );
+};
+
+// --- Mock Dashboard Component ---
+
+const DashboardPage = ({ onLogout }) => {
+ const [profiles, setProfiles] = useState([
+   { id: 8291, name: "Facebook Ad Account 01", os: "Win 10", browser: "Chrome 118", proxy: "192.168.1.1 (US)", status: "ready" },
+   { id: 8292, name: "Google Ads Main", os: "MacOS", browser: "Chrome 119", proxy: "104.22.11.5 (DE)", status: "running" },
+   { id: 8293, name: "eBay Merchant Store", os: "Win 11", browser: "Firefox 112", proxy: "45.33.22.11 (UK)", status: "ready" },
+   { id: 8294, name: "TikTok Farm #4", os: "Android", browser: "Mobile", proxy: "88.11.22.99 (FR)", status: "error" },
+ ]);
+
+ const toggleStatus = (id) => {
+   setProfiles(profiles.map(p => {
+     if (p.id === id) {
+       return { ...p, status: p.status === 'running' ? 'ready' : 'running' };
+     }
+     return p;
+   }));
+ };
+
+ return (
+   <div className="flex h-screen bg-slate-950 text-slate-200 overflow-hidden">
+     {/* Sidebar */}
+     <div className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col hidden md:flex">
+       <div className="p-6">
+         <Logo />
        </div>
-   </footer>
+       <div className="flex-1 px-4 space-y-2">
+         <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 px-2">Main</div>
+         <button className="w-full flex items-center space-x-3 bg-indigo-600/10 text-indigo-400 px-4 py-2.5 rounded-lg font-medium">
+           <LayoutGrid size={18} /> <span>Profiles</span>
+         </button>
+         <button className="w-full flex items-center space-x-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-2.5 rounded-lg transition-colors">
+           <Globe size={18} /> <span>Proxies</span>
+         </button>
+         <button className="w-full flex items-center space-x-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-2.5 rounded-lg transition-colors">
+           <Users size={18} /> <span>Team</span>
+         </button>
+         <button className="w-full flex items-center space-x-3 text-slate-400 hover:text-white hover:bg-slate-800 px-4 py-2.5 rounded-lg transition-colors">
+           <Cpu size={18} /> <span>API & Auto</span>
+         </button>
+       </div>
+       <div className="p-4 border-t border-slate-800">
+         <button onClick={onLogout} className="flex items-center space-x-3 text-slate-400 hover:text-white w-full px-4 py-2">
+           <LogOut size={18} /> <span>Sign Out</span>
+         </button>
+       </div>
+     </div>
 
-   <!-- SCRIPT FOR ANIMATIONS & RADAR -->
-   <script>
-       // --- 1. Navbar Glass Effect ---
-       const navbar = document.getElementById('navbar');
-       window.addEventListener('scroll', () => {
-           if (window.scrollY > 50) {
-               navbar.classList.add('bg-black/80', 'backdrop-blur-md', 'border-[#00ff88]/20');
-               navbar.classList.remove('border-transparent');
-           } else {
-               navbar.classList.remove('bg-black/80', 'backdrop-blur-md', 'border-[#00ff88]/20');
-               navbar.classList.add('border-transparent');
-           }
-       });
+     {/* Main Content */}
+     <div className="flex-1 flex flex-col overflow-hidden">
+       {/* Top Header */}
+       <header className="h-16 bg-slate-900/50 border-b border-slate-800 flex items-center justify-between px-6">
+         <h2 className="font-semibold text-white">Browser Profiles</h2>
+         <div className="flex items-center space-x-4">
+           <div className="flex items-center space-x-2 text-sm text-green-400 bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20">
+             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+             <span>System Operational</span>
+           </div>
+           <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-sm font-bold">
+             JD
+           </div>
+         </div>
+       </header>
 
-       // --- 2. Scroll Reveal Observer ---
-       const revealElements = document.querySelectorAll('.reveal');
-       const revealObserver = new IntersectionObserver((entries) => {
-           entries.forEach(entry => {
-               if (entry.isIntersecting) {
-                   entry.target.classList.add('active');
-               }
-           });
-       }, { threshold: 0.1 });
+       {/* Dashboard Content */}
+       <div className="flex-1 overflow-auto p-8">
+         {/* Actions Bar */}
+         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+            <div className="relative w-full sm:w-96">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search profiles, tags, or IDs..."
+                className="w-full bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2.5 text-slate-300 focus:outline-none focus:border-indigo-500"
+              />
+            </div>
+            <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2.5 rounded-lg font-bold flex items-center transition-all shadow-lg shadow-indigo-500/20">
+              <Plus className="w-5 h-5 mr-2" /> New Profile
+            </button>
+         </div>
 
-       revealElements.forEach(el => revealObserver.observe(el));
+         {/* Profile Table */}
+         <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
+           <table className="w-full text-left">
+             <thead>
+               <tr className="bg-slate-950 border-b border-slate-800 text-slate-400 text-sm">
+                 <th className="px-6 py-4 font-medium">Profile Name</th>
+                 <th className="px-6 py-4 font-medium">Status</th>
+                 <th className="px-6 py-4 font-medium hidden md:table-cell">Proxy</th>
+                 <th className="px-6 py-4 font-medium hidden md:table-cell">Config</th>
+                 <th className="px-6 py-4 font-medium text-right">Actions</th>
+               </tr>
+             </thead>
+             <tbody className="divide-y divide-slate-800">
+               {profiles.map((profile) => (
+                 <tr key={profile.id} className="hover:bg-slate-800/50 transition-colors group">
+                   <td className="px-6 py-4">
+                     <div className="flex items-center space-x-3">
+                       <div className={`w-2 h-2 rounded-full ${profile.status === 'running' ? 'bg-green-500' : 'bg-slate-600'}`}></div>
+                       <div>
+                         <div className="font-medium text-white">{profile.name}</div>
+                         <div className="text-xs text-slate-500 font-mono">ID: {profile.id}</div>
+                       </div>
+                     </div>
+                   </td>
+                   <td className="px-6 py-4">
+                     {profile.status === 'running' ? (
+                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20">
+                         Active
+                       </span>
+                     ) : profile.status === 'error' ? (
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
+                         Proxy Error
+                       </span>
+                     ) : (
+                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-700/50 text-slate-400 border border-slate-700">
+                         Stopped
+                       </span>
+                     )}
+                   </td>
+                   <td className="px-6 py-4 text-sm text-slate-400 hidden md:table-cell">
+                     <div className="flex items-center space-x-2">
+                       <Globe size={14} />
+                       <span>{profile.proxy}</span>
+                     </div>
+                   </td>
+                   <td className="px-6 py-4 text-sm text-slate-400 hidden md:table-cell">
+                     {profile.os} • {profile.browser}
+                   </td>
+                   <td className="px-6 py-4 text-right">
+                     <div className="flex items-center justify-end space-x-3">
+                       <button
+                         onClick={() => toggleStatus(profile.id)}
+                         className={`flex items-center px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                           profile.status === 'running'
+                           ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20'
+                           : 'bg-green-600 hover:bg-green-700 text-white shadow-lg shadow-green-500/10'
+                         }`}
+                       >
+                         {profile.status === 'running' ? 'Stop' : <><Play size={12} className="mr-1.5" /> Launch</>}
+                       </button>
+                       <button className="text-slate-500 hover:text-white p-1 rounded hover:bg-slate-800">
+                         <Settings size={16} />
+                       </button>
+                     </div>
+                   </td>
+                 </tr>
+               ))}
+             </tbody>
+           </table>
+         </div>
+       </div>
+     </div>
+   </div>
+ );
+};
 
-       // --- 3. Radar Canvas Simulation (Updated for "Blocking") ---
-       const canvas = document.getElementById('radarCanvas');
-       const ctx = canvas.getContext('2d');
-       let angle = 0;
-       let blockedCount = 0;
+// --- Main App Controller ---
 
-       // Random tracking attempts (blips)
-       const threats = [
-           { r: 120, a: 45, s: 0.5, type: 'tracker' },
-           { r: 200, a: 180, s: 0.8, type: 'tracker' },
-           { r: 250, a: 300, s: 0.3, type: 'fingerprinter' }
-       ];
+const App = () => {
+ const [currentPage, setCurrentPage] = useState('home'); // home, download, login, dashboard
+ const [isMenuOpen, setIsMenuOpen] = useState(false);
+ const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-       function drawRadar() {
-           // Scale correction
-           const width = canvas.width;
-           const height = canvas.height;
-           const cx = width / 2;
-           const cy = height / 2;
+ // Auto-scroll to top on navigation
+ useEffect(() => {
+   window.scrollTo(0, 0);
+ }, [currentPage]);
+
+ const handleNavigate = (page) => {
+   setIsMenuOpen(false);
+   
+   // Handle hash links if on home page
+   if (page.startsWith('#')) {
+     if (currentPage !== 'home') {
+       setCurrentPage('home');
+       setTimeout(() => {
+         const element = document.querySelector(page);
+         element?.scrollIntoView({ behavior: 'smooth' });
+       }, 100);
+     } else {
+       const element = document.querySelector(page);
+       element?.scrollIntoView({ behavior: 'smooth' });
+     }
+     return;
+   }
+
+   setCurrentPage(page);
+ };
+
+ const handleLogin = () => {
+   setIsLoggedIn(true);
+   setCurrentPage('dashboard');
+ };
+
+ const handleLogout = () => {
+   setIsLoggedIn(false);
+   setCurrentPage('login');
+ };
+
+ // If on dashboard, render without standard navbar/footer
+ if (currentPage === 'dashboard' && isLoggedIn) {
+   return <DashboardPage onLogout={handleLogout} />;
+ }
+
+ return (
+   <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-indigo-500/30 flex flex-col">
+     
+     {/* Navigation */}
+     <nav className="fixed w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         <div className="flex items-center justify-between h-20">
+           <div onClick={() => handleNavigate('home')}>
+              <Logo />
+           </div>
            
-           // Clear
-           ctx.clearRect(0, 0, width, height);
+           <div className="hidden md:block">
+             <div className="ml-10 flex items-baseline space-x-8">
+               <button onClick={() => handleNavigate('#features')} className="hover:text-white transition-colors">Features</button>
+               <button onClick={() => handleNavigate('#use-cases')} className="hover:text-white transition-colors">Use Cases</button>
+               <button onClick={() => handleNavigate('#pricing')} className="hover:text-white transition-colors">Pricing</button>
+               <button onClick={() => handleNavigate('download')} className={`transition-colors ${currentPage === 'download' ? 'text-indigo-400 font-medium' : 'hover:text-white'}`}>Download</button>
+             </div>
+           </div>
 
-           // Draw Static Rings
-           ctx.strokeStyle = '#1a1a1a';
-           ctx.lineWidth = 1;
-           
-           [50, 100, 150, 200, 250].forEach(r => {
-               ctx.beginPath();
-               ctx.arc(cx, cy, r, 0, Math.PI * 2);
-               ctx.stroke();
-           });
+           <div className="hidden md:flex items-center space-x-4">
+             <button onClick={() => handleNavigate('login')} className="text-slate-300 hover:text-white font-medium">Log In</button>
+             <button onClick={() => handleNavigate('login')} className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-medium transition-all shadow-lg shadow-indigo-500/20">
+               Get Started
+             </button>
+           </div>
 
-           // Crosshairs
-           ctx.beginPath();
-           ctx.moveTo(cx, 0); ctx.lineTo(cx, height);
-           ctx.moveTo(0, cy); ctx.lineTo(width, cy);
-           ctx.stroke();
+           <div className="md:hidden">
+             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-slate-300 hover:text-white">
+               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+             </button>
+           </div>
+         </div>
+       </div>
 
-           // Draw Threats
-           threats.forEach(t => {
-               // Move slowly
-               t.a += 0.2 * t.s;
-               
-               const rad = t.a * (Math.PI / 180);
-               const x = cx + t.r * Math.cos(rad);
-               const y = cy + t.r * Math.sin(rad);
+       {/* Mobile Menu */}
+       {isMenuOpen && (
+         <div className="md:hidden bg-slate-900 border-b border-slate-800">
+           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
+             <button onClick={() => handleNavigate('#features')} className="block text-left w-full px-3 py-2 rounded-md hover:bg-slate-800">Features</button>
+             <button onClick={() => handleNavigate('#pricing')} className="block text-left w-full px-3 py-2 rounded-md hover:bg-slate-800">Pricing</button>
+             <button onClick={() => handleNavigate('download')} className="block text-left w-full px-3 py-2 rounded-md hover:bg-slate-800">Download</button>
+             <button onClick={() => handleNavigate('login')} className="block text-left w-full px-3 py-2 rounded-md text-indigo-400 font-bold">Log In</button>
+           </div>
+         </div>
+       )}
+     </nav>
 
-               // Draw "Blocked" X or Blip
-               // Calculate angular distance to sweep
-               const sweepRad = angle % (Math.PI * 2);
-               const threatRadNorm = rad % (Math.PI * 2);
-               const diff = Math.abs(sweepRad - threatRadNorm);
+     <main className="flex-grow">
+       {currentPage === 'home' && <HomePage navigateTo={handleNavigate} />}
+       {currentPage === 'download' && <DownloadPage />}
+       {currentPage === 'login' && <LoginPage onLogin={handleLogin} />}
+     </main>
 
-               // If sweep hits threat, flash it red
-               if (diff < 0.2) {
-                   ctx.fillStyle = '#ff4444'; // Red for blocked threat
-                   ctx.shadowBlur = 15;
-                   ctx.shadowColor = '#ff4444';
-                   
-                   // Increment counter occasionally for effect
-                   if (Math.random() > 0.98) {
-                       blockedCount++;
-                       document.getElementById('tracker-count').innerText = `${blockedCount} BLOCKED`;
-                   }
-               } else {
-                   ctx.fillStyle = '#333'; // Dim when not scanned
-                   ctx.shadowBlur = 0;
-               }
+     {/* Footer */}
+     <footer className="bg-slate-950 border-t border-slate-800 pt-16 pb-8">
+       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+           <div className="col-span-2 md:col-span-1">
+             <div className="flex items-center space-x-2 mb-4">
+               <Fingerprint className="text-indigo-500 w-6 h-6" />
+               <span className="text-lg font-bold text-white">NaviBrowser</span>
+             </div>
+             <p className="text-sm text-slate-500">
+               The most advanced anti-detect browser for managing multiple accounts with safety and ease.
+             </p>
+           </div>
+           <div>
+             <h4 className="font-bold text-white mb-4">Product</h4>
+             <ul className="space-y-2 text-sm text-slate-400">
+               <li><button onClick={() => handleNavigate('download')} className="hover:text-indigo-400">Download</button></li>
+               <li><button onClick={() => handleNavigate('#pricing')} className="hover:text-indigo-400">Pricing</button></li>
+               <li><button className="hover:text-indigo-400">API Docs</button></li>
+               <li><button className="hover:text-indigo-400">Changelog</button></li>
+             </ul>
+           </div>
+           <div>
+             <h4 className="font-bold text-white mb-4">Resources</h4>
+             <ul className="space-y-2 text-sm text-slate-400">
+               <li><button className="hover:text-indigo-400">Blog</button></li>
+               <li><button className="hover:text-indigo-400">Proxy Checker</button></li>
+               <li><button className="hover:text-indigo-400">Community</button></li>
+               <li><button className="hover:text-indigo-400">Help Center</button></li>
+             </ul>
+           </div>
+           <div>
+             <h4 className="font-bold text-white mb-4">Legal</h4>
+             <ul className="space-y-2 text-sm text-slate-400">
+               <li><button className="hover:text-indigo-400">Privacy Policy</button></li>
+               <li><button className="hover:text-indigo-400">Terms of Service</button></li>
+               <li><button className="hover:text-indigo-400">Refund Policy</button></li>
+             </ul>
+           </div>
+         </div>
+         <div className="text-center text-sm text-slate-600 pt-8 border-t border-slate-900">
+           © {new Date().getFullYear()} NaviBrowser Inc. All rights reserved.
+         </div>
+       </div>
+     </footer>
+   </div>
+ );
+};
 
-               ctx.beginPath();
-               ctx.arc(x, y, 5, 0, Math.PI * 2);
-               ctx.fill();
-           });
-
-           // Draw The Sweep
-           const sweepGradient = ctx.createConicGradient(angle, cx, cy);
-           sweepGradient.addColorStop(0, 'rgba(0, 255, 136, 0.4)'); // Leading edge
-           sweepGradient.addColorStop(0.1, 'rgba(0, 255, 136, 0)'); // Fade out
-           sweepGradient.addColorStop(1, 'rgba(0, 255, 136, 0)');
-
-           ctx.fillStyle = sweepGradient;
-           ctx.beginPath();
-           ctx.arc(cx, cy, 280, 0, Math.PI * 2);
-           ctx.fill();
-
-           // Leading Edge Line
-           ctx.strokeStyle = '#00ff88';
-           ctx.lineWidth = 2;
-           ctx.beginPath();
-           ctx.moveTo(cx, cy);
-           ctx.lineTo(cx + 280 * Math.cos(angle), cy + 280 * Math.sin(angle));
-           ctx.stroke();
-
-           // Rotate
-           angle += 0.03;
-
-           requestAnimationFrame(drawRadar);
-       }
-
-       // Init Radar
-       drawRadar();
-
-   </script>
-</body>
-</html>
+export default App;
